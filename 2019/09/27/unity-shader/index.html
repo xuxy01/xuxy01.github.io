@@ -1,0 +1,439 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  
+    <title>Unity shaderLab语法 | 一条咸鱼</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="Xu X.Y">
+    
+    <meta name="description" content="Unity中的着色文件都是使用声明性ShaderLab语言编写。
+Shader 是着色文件的根命令。每个文件有且仅有一个Shader。实际的着色代码编写在CGPROGRAM代码段中，用HLSL/Cg 着色语言编写。
+语法Shader &amp;quot;name&amp;quot; {[Properties]Sub">
+    
+    
+    
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="一条咸鱼" title="一条咸鱼"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="一条咸鱼">一条咸鱼</a></h1>
+				<h2 class="blog-motto">一条想要实现梦想后躺着的咸鱼</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:xuxy01.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2019/09/27/unity-shader/" title="Unity shaderLab语法" itemprop="url">Unity shaderLab语法</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://xuxy01.github.io" title="Xu X.Y">Xu X.Y</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2019-09-27T08:02:29.000Z" itemprop="datePublished">2019-09-27</time>
+    更新日期:<time datetime="2019-09-29T16:41:11.993Z" itemprop="dateModified">2019-09-30</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#语法"><span class="toc-number">1.</span> <span class="toc-text">语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Properties"><span class="toc-number">2.</span> <span class="toc-text">Properties</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SubShader"><span class="toc-number">3.</span> <span class="toc-text">SubShader</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pass"><span class="toc-number">4.</span> <span class="toc-text">Pass</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UsePass"><span class="toc-number">5.</span> <span class="toc-text">UsePass</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GrabPass"><span class="toc-number">6.</span> <span class="toc-text">GrabPass</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#子着色标签"><span class="toc-number">7.</span> <span class="toc-text">子着色标签</span></a></li></ol>
+		</div>
+		
+		<p>Unity中的着色文件都是使用声明性ShaderLab语言编写。</p>
+<p>Shader 是着色文件的根命令。每个文件有且仅有一个Shader。实际的着色代码编写在CGPROGRAM代码段中，用HLSL/Cg 着色语言编写。</p>
+<h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><pre><code>Shader &quot;name&quot; {[Properties]SubShaders[Fallback][CustomEditor]}</code></pre><p><strong>name</strong>: 名称</p>
+<p><strong>Properties</strong>: 属性列表。着色中声明的所有属性都会显示在Unity的材质检视面板中。典型的属性包括对象颜色、纹理或者着色中使用的值。</p>
+<p><strong>SubShaders[Fallback]</strong>：子着色和回退.子着色列表定了一系列支持不同硬件性能的着色。Unity会检查硬件支持的第一个子着色，如果没有子着色支持，则使用回退着色。</p>
+<p><strong>示例</strong></p>
+<pre><code>// 有色顶点光照
+Shader &quot;Simple colored lighting&quot;
+{
+    // 单个颜色属性
+    Properties {
+        _Color (&quot;Main Color&quot;, Color) = (1,.5,.5,1)
+    }
+    // 定义一个子着色器
+    SubShader
+    {
+        // 子着色器中的单个通道
+        Pass
+        {
+            // 使用固定函数每顶点光照
+            Material
+            {
+                Diffuse [_Color]
+            }
+            Lighting On
+        }
+    }
+}</code></pre><h3 id="Properties"><a href="#Properties" class="headerlink" title="Properties"></a>Properties</h3><p><strong>语法</strong></p>
+<pre><code>Properties { Property [Property ...]}</code></pre><p><strong>数字和滑动条</strong></p>
+<pre><code>name (&quot;display name&quot;, Range (min, max)) = number
+name (&quot;display name&quot;, Float) = number
+name (&quot;display name&quot;, Int) = number</code></pre><p>定1义一个具有默认值的数字（标量）属性</p>
+<p><strong>颜色和矢量</strong></p>
+<pre><code>name (&quot;display name&quot;, Color) = (number,number,number,number)
+name (&quot;display name&quot;, Vector) = (number,number,number,number)</code></pre><p>使用给定 RGBA 分量的默认值定义颜色属性，或使用默认值定义 4D 矢量属性。</p>
+<p><strong>纹理</strong></p>
+<pre><code>name (&quot;display name&quot;, 2D) = &quot;defaulttexture&quot; {}
+name (&quot;display name&quot;, Cube) = &quot;defaulttexture&quot; {}
+name (&quot;display name&quot;, 3D) = &quot;defaulttexture&quot; {}</code></pre><p>分别定义 2D 纹理、立方体贴图或 3D（体积）属性。</p>
+<p>对于2D纹理，默认值为空字符串或者内置默认纹理之一：“white”（RGBA：1,1,1,1）、“black”（RGBA：0,0,0,0）、“gray”（RGBA：0.5,0.5,0.5,0.5）、“bump”（RGBA：0.5,0.5,1,0.5）或“red”（RGBA：1,0,0,0）。</p>
+<p>对于非2D纹理（立方体、3D、2D数组纹理），默认值为空字符串。如果材质未指定立方体贴图/3D/数组纹理，则使用灰色（RGBA：0.5,0.5,0.5,0.5）。</p>
+<p>着色器中通过name引用，通常以下划线开头。在材质检视面板以display name显示。只有Properties中的着色参数才会被序列化为材质数据。</p>
+<p>属性前面可以指定可选特性。Unity可以识别这些特性，或者可以自定义 MaterialPropertyDrawer 类来控制属性在材质检视面板的显示方式。</p>
+<ul>
+<li>[HideInInspector]-不在材质检视面板中显示。</li>
+<li>[NoScaleOffset]-不会显示纹理平铺和偏移字段。</li>
+<li>[Normal]-纹理属性需要发现贴图</li>
+<li>[HDR]-纹理属性需要高动态范围(HDR)纹理</li>
+<li>[Gamma]-在 UI 中将浮点/矢量属性指定为 sRGB 值（就像颜色一样），并且可能需要根据使用的颜色空间进行转换。</li>
+<li>[PerRendererData]-纹理属性将以以 MaterialPropertyBlock 的形式来自每渲染器数据。材质检视面板会更改这些属性的纹理字段 UI。</li>
+</ul>
+<h3 id="SubShader"><a href="#SubShader" class="headerlink" title="SubShader"></a>SubShader</h3><p><strong>语法</strong></p>
+<pre><code>Subshader { [Tags] [CommonState] Passdef [Passdef ...]}</code></pre><p>Tags：标签<br>CommonState：渲染通道共用状态<br>Passdef：渲染通道列表，Unity会为每一个通道渲染一次。尽量定义少的通道。</p>
+<h3 id="Pass"><a href="#Pass" class="headerlink" title="Pass"></a>Pass</h3><p><strong>语法</strong></p>
+<p>Pass { [Name and Tags] [RenderSetup] }</p>
+<p>通道可以定义一个名称和任意数量的标签。</p>
+<p><strong>通道状态设置</strong></p>
+<ul>
+<li><p>多边形剔除模式</p>
+<pre><code>Cull Back | Front | Off</code></pre></li>
+<li><p>深度缓冲区测试模式</p>
+<pre><code>ZTest (Less | Greater | LEqual | GEqual | Equal | NotEqual | Always)</code></pre></li>
+<li><p>深度缓冲区写入模式</p>
+<pre><code>ZWrite On | Off</code></pre></li>
+<li><p>Z缓冲区深度偏移</p>
+<pre><code>Offset OffsetFactor, OffsetUnits</code></pre></li>
+<li><p>Alpha混合、Alpha操作和alpha-to-covereage模式</p>
+<pre><code>Blend sourceBlendMode destBlendMode
+Blend sourceBlendMode destBlendMode, alphaSourceBlendMode alphaDestBlendMode
+BlendOp colorOp
+BlendOp colorOp, alphaOp
+AlphaToMask On | Off</code></pre></li>
+<li><p>颜色通道写入遮罩。写入 ColorMask 0 可关闭对所有颜色通道的渲染。默认模式是写入所有通道 (RGBA)。使用多渲染目标 (MRT) 渲染时，可通过在末尾添加索引（0 到 7）来为每个渲染目标设置不同的颜色遮罩。例如，ColorMask RGB 3 将使渲染目标 #3 仅写入到 RGB 通道。</p>
+<pre><code>ColorMask RGB | A | 0 | R、G、B、A 的任意组合</code></pre></li>
+</ul>
+<h3 id="UsePass"><a href="#UsePass" class="headerlink" title="UsePass"></a>UsePass</h3><p><strong>语法</strong></p>
+<pre><code>UsePass &quot;Shader/Name&quot;</code></pre><p>插入来自给定着色器的具有给定名称的所有通道。UsePass 必须引用大写名称。</p>
+<h3 id="GrabPass"><a href="#GrabPass" class="headerlink" title="GrabPass"></a>GrabPass</h3><p>GrabPass 是一种特殊通道类型，它把即将绘制对象时的屏幕内容抓取到纹理中。在后续通道中即可使用此纹理，从而执行基于图像的高级效果。</p>
+<p><strong>语法</strong></p>
+<p>GrabPass包含在子着色内部。有两种形式；</p>
+<ol>
+<li>GrabPass{},将当前屏幕内容抓取到某个纹理，随后的通道可以通过_GrabTexture 名称访问该纹理。这种形式将为每个执行他的对象执行耗时的屏幕抓取操作。</li>
+<li>GrabPass{“TextureName”}可将当前屏幕内容抓取到纹理中，但仅为使用给定纹理名称的第一个对象在每一帧执行一次该操作。在后续通道中可通过给定纹理名称访问该纹理。场景中有多个对象在使用 GrabPass 时，这种方法更高效。</li>
+</ol>
+<p>GrabPass还可以使用Name和Tags命令。</p>
+<h3 id="子着色标签"><a href="#子着色标签" class="headerlink" title="子着色标签"></a>子着色标签</h3><p><strong>语法</strong></p>
+<pre><code>Tags { &quot;TagName1&quot; = &quot;Value1&quot; &quot;TagName2&quot; = &quot;Value2&quot; }</code></pre><p>在 SubShader 中，标签用于确定子着色器的渲染顺序和其他参数。请注意，以下由 Unity 识别的标签必须位于 SubShader 部分中，不能在 Pass 中！</p>
+<p><strong>渲染顺序 - Queue标签</strong></p>
+<p>Unity中预定义了四个渲染队列。</p>
+<ul>
+<li>Background - 在其他队列之前渲染。通常处理背景中的对象。</li>
+<li>Geometry(默认) - 用于大部分对象，不透明对象使用此队列。</li>
+<li>AlphaTest - 进行Alpha测试的对象在此队列。</li>
+<li>Transparent - 任何经过Alpha混合的对象（即不写入深度缓冲区的着色）都应该放在此队列（玻璃效果、粒子效果）。</li>
+<li>Overlay - 呈现覆盖效果的对象放在此队列（镜头光晕）。</li>
+</ul>
+<p>示例：</p>
+<pre><code>Shader &quot;Transparent Queue Example&quot;
+{
+     SubShader
+     {
+        Tags { &quot;Queue&quot; = &quot;Transparent&quot; }
+        Pass
+        {
+            // 着色器主体的剩余部分...
+        }
+    }
+}</code></pre><p>在内部，每个队列由整数索引表示；Background 是 1000，Geometry 是 2000，AlphaTest 是 2450，Transparent 是 3000，Overlay 是 4000。可以使用 <code>Tags { &quot;Queue&quot; = &quot;Geometry+1&quot; }</code>的方式。</p>
+<p>索引值高达 2500 的队列（“Geometry+500”）视为“不透明”，并且会优化对象的绘制顺序以获得最佳性能。较高索引的渲染队列被认为是“透明对象”并按距离将对象进行排序，从距离最远的对象开始渲染，最后渲染距离最近的对象。天空盒在所有不透明对象和所有透明对象之间绘制。</p>
+<p><strong>RenderType 标签</strong></p>
+<p>RenderType 标签将着色器分为几个预定义的组，例如，不透明的着色器，或经过 Alpha 测试的着色器等等。</p>
+<p><strong>DisableBatching 标签</strong></p>
+<p>可使用 DisableBatching 标签来指示这一情况。有三个可能的值：“True”（始终对此着色器禁用批处理）、“False”（不禁用批处理；这是默认值）和“LODFading”（当 LOD 淡化处于激活状态时禁用批处理；主要用于树）。</p>
+<p><strong>ForceNoShadowCasting 标签</strong></p>
+<p>如果提供了 ForceNoShadowCasting 标签并且值为“True”，则使用该子着色器渲染的对象绝不会投射阴影。对透明对象使用着色器替换并且不希望从其他子着色器继承阴影通道时，这非常有用。</p>
+<p><strong>IgnoreProjector 标签</strong></p>
+<p>如果提供了 IgnoreProjector 标签并且值为“True”，则使用此着色器的对象不会受到投影器的影响。这对半透明对象非常有用，因为投影器无法影响它们。</p>
+<p><strong>CanUseSpriteAtlas 标签</strong></p>
+<p>如果着色器用于精灵，请将 CanUseSpriteAtlas 标签设置为“False”，这样在精灵打包到图集内时，该标签将不起作用，（请参阅精灵打包器 (Sprite Packer)）。</p>
+<p><strong>PreviewType 标签</strong></p>
+<p>PreviewType 指示材质检视面板预览应如何显示材质。默认情况下，材质显示为球体，但也可以将 PreviewType 设置为“Plane”（将显示为 2D）或“Skybox”（将显示为天空盒）。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/unity/">unity</a><a href="/tags/shader/">shader</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Unity-学习笔记/">Unity,学习笔记</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="https://xuxy01.github.io/2019/09/27/unity-shader/" data-title="Unity shaderLab语法 | 一条咸鱼" data-tsina="" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2019/09/23/creational-pattern1/"  title="创建型模式（Creational Pattern）">
+ <strong>NEXT:</strong><br/> 
+ <span>创建型模式（Creational Pattern）
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#语法"><span class="toc-number">1.</span> <span class="toc-text">语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Properties"><span class="toc-number">2.</span> <span class="toc-text">Properties</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SubShader"><span class="toc-number">3.</span> <span class="toc-text">SubShader</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pass"><span class="toc-number">4.</span> <span class="toc-text">Pass</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UsePass"><span class="toc-number">5.</span> <span class="toc-text">UsePass</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GrabPass"><span class="toc-number">6.</span> <span class="toc-text">GrabPass</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#子着色标签"><span class="toc-number">7.</span> <span class="toc-text">子着色标签</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/Unity-学习笔记/" title="Unity,学习笔记">Unity,学习笔记<sup>1</sup></a></li>
+		
+			<li><a href="/categories/设计模式/" title="设计模式">设计模式<sup>3</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/shader/" title="shader">shader<sup>1</sup></a></li>
+		
+			<li><a href="/tags/unity/" title="unity">unity<sup>1</sup></a></li>
+		
+			<li><a href="/tags/设计模式/" title="设计模式">设计模式<sup>3</sup></a></li>
+		
+			<li><a href="/tags/读书笔记/" title="读书笔记">读书笔记<sup>3</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<div class="social-font clearfix">
+		
+		
+		
+		<a href="https://github.com/xuxy01" target="_blank" title="github"></a>
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2019 
+		
+		<a href="https://xuxy01.github.io" target="_blank" title="Xu X.Y">Xu X.Y</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+
+  </body>
+</html>
