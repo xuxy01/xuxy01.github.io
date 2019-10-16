@@ -11,7 +11,8 @@
     
     <meta name="description" content="Unity中的着色文件都是使用声明性ShaderLab语言编写。
 Shader 是着色文件的根命令。每个文件有且仅有一个Shader。实际的着色代码编写在CGPROGRAM代码段中，用HLSL/Cg 着色语言编写。
-语法Shader &amp;quot;name&amp;quot; {[Properties]Sub">
+
+语法Shader &amp;quot;name&amp;quot; {[Properties]Su">
     
     
     
@@ -75,7 +76,7 @@ Shader 是着色文件的根命令。每个文件有且仅有一个Shader。实�
     </p>
   <p class="article-time">
     <time datetime="2019-09-27T08:02:29.000Z" itemprop="datePublished">2019-09-27</time>
-    更新日期:<time datetime="2019-09-29T16:41:11.993Z" itemprop="dateModified">2019-09-30</time>
+    更新日期:<time datetime="2019-10-16T17:44:00.808Z" itemprop="dateModified">2019-10-17</time>
     
   </p>
 </header>
@@ -84,11 +85,12 @@ Shader 是着色文件的根命令。每个文件有且仅有一个Shader。实�
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#语法"><span class="toc-number">1.</span> <span class="toc-text">语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Properties"><span class="toc-number">2.</span> <span class="toc-text">Properties</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SubShader"><span class="toc-number">3.</span> <span class="toc-text">SubShader</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pass"><span class="toc-number">4.</span> <span class="toc-text">Pass</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UsePass"><span class="toc-number">5.</span> <span class="toc-text">UsePass</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GrabPass"><span class="toc-number">6.</span> <span class="toc-text">GrabPass</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#子着色标签"><span class="toc-number">7.</span> <span class="toc-text">子着色标签</span></a></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#语法"><span class="toc-number">1.</span> <span class="toc-text">语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Properties"><span class="toc-number">2.</span> <span class="toc-text">Properties</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SubShader"><span class="toc-number">3.</span> <span class="toc-text">SubShader</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pass"><span class="toc-number">4.</span> <span class="toc-text">Pass</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UsePass"><span class="toc-number">5.</span> <span class="toc-text">UsePass</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GrabPass"><span class="toc-number">6.</span> <span class="toc-text">GrabPass</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#子着色标签"><span class="toc-number">7.</span> <span class="toc-text">子着色标签</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Fallback"><span class="toc-number">8.</span> <span class="toc-text">Fallback</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CustomEditor"><span class="toc-number">9.</span> <span class="toc-text">CustomEditor</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其他命令"><span class="toc-number">10.</span> <span class="toc-text">其他命令</span></a></li></ol>
 		</div>
 		
 		<p>Unity中的着色文件都是使用声明性ShaderLab语言编写。</p>
 <p>Shader 是着色文件的根命令。每个文件有且仅有一个Shader。实际的着色代码编写在CGPROGRAM代码段中，用HLSL/Cg 着色语言编写。</p>
+<hr>
 <h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><pre><code>Shader &quot;name&quot; {[Properties]SubShaders[Fallback][CustomEditor]}</code></pre><p><strong>name</strong>: 名称</p>
 <p><strong>Properties</strong>: 属性列表。着色中声明的所有属性都会显示在Unity的材质检视面板中。典型的属性包括对象颜色、纹理或者着色中使用的值。</p>
 <p><strong>SubShaders[Fallback]</strong>：子着色和回退.子着色列表定了一系列支持不同硬件性能的着色。Unity会检查硬件支持的第一个子着色，如果没有子着色支持，则使用回退着色。</p>
@@ -114,7 +116,8 @@ Shader &quot;Simple colored lighting&quot;
             Lighting On
         }
     }
-}</code></pre><h3 id="Properties"><a href="#Properties" class="headerlink" title="Properties"></a>Properties</h3><p><strong>语法</strong></p>
+}</code></pre><hr>
+<h3 id="Properties"><a href="#Properties" class="headerlink" title="Properties"></a>Properties</h3><p><strong>语法</strong></p>
 <pre><code>Properties { Property [Property ...]}</code></pre><p><strong>数字和滑动条</strong></p>
 <pre><code>name (&quot;display name&quot;, Range (min, max)) = number
 name (&quot;display name&quot;, Float) = number
@@ -138,12 +141,15 @@ name (&quot;display name&quot;, 3D) = &quot;defaulttexture&quot; {}</code></pre>
 <li>[Gamma]-在 UI 中将浮点/矢量属性指定为 sRGB 值（就像颜色一样），并且可能需要根据使用的颜色空间进行转换。</li>
 <li>[PerRendererData]-纹理属性将以以 MaterialPropertyBlock 的形式来自每渲染器数据。材质检视面板会更改这些属性的纹理字段 UI。</li>
 </ul>
+<hr>
 <h3 id="SubShader"><a href="#SubShader" class="headerlink" title="SubShader"></a>SubShader</h3><p><strong>语法</strong></p>
 <pre><code>Subshader { [Tags] [CommonState] Passdef [Passdef ...]}</code></pre><p>Tags：标签<br>CommonState：渲染通道共用状态<br>Passdef：渲染通道列表，Unity会为每一个通道渲染一次。尽量定义少的通道。</p>
+<hr>
 <h3 id="Pass"><a href="#Pass" class="headerlink" title="Pass"></a>Pass</h3><p><strong>语法</strong></p>
 <p>Pass { [Name and Tags] [RenderSetup] }</p>
 <p>通道可以定义一个名称和任意数量的标签。</p>
 <p><strong>通道状态设置</strong></p>
+<p><img src="/.io//cull.png" alt></p>
 <ul>
 <li><p>多边形剔除模式</p>
 <pre><code>Cull Back | Front | Off</code></pre></li>
@@ -154,16 +160,63 @@ name (&quot;display name&quot;, 3D) = &quot;defaulttexture&quot; {}</code></pre>
 <li><p>Z缓冲区深度偏移</p>
 <pre><code>Offset OffsetFactor, OffsetUnits</code></pre></li>
 <li><p>Alpha混合、Alpha操作和alpha-to-covereage模式</p>
-<pre><code>Blend sourceBlendMode destBlendMode
-Blend sourceBlendMode destBlendMode, alphaSourceBlendMode alphaDestBlendMode
+<pre><code>//关闭混合（默认）
+Blend Off;
+//配置启动混合，生成颜色*sourceBlendMode+已有颜色*destBlendMod
+Blend sourceBlendMode destBlendMod
+//同上，但使用后面参数单独混合Alpha
+Blend sourceBlendMode destBlendMod, alphaSourceBlendMode alphaDestBlendMode
+//不将混合颜色相加，而是其他操作
 BlendOp colorOp
+//同上，但是对颜色（RGB）和ALpha进行不同处理。
 BlendOp colorOp, alphaOp
-AlphaToMask On | Off</code></pre></li>
+
+以上可以在标签可以在指定渲染目标（0-7），如BlendOP N colorOp
+
+//开启alpha-to-coverage。使用MSAA（多重采样抗锯齿）时，会根据像素着色结果Alpha值
+//按比例修改多重采样覆盖率遮罩
+AlphaToMask On | Off</code></pre><p>混合操作和混合系数 <a href="https://connect.unity.com/doc/Manual/SL-Blend" target="_blank" rel="noopener">参考链接</a></p>
+</li>
+<li><p>通道标签，用来告知何时以何种方式渲染到引擎,控制此通道在光照管线中具有那个角色和选项。标签必须位于Pass部分，不能在SubShader中。</p>
+<pre><code>//语法
+Tags{&quot;TagName1&quot;=&quot;Value1&quot; &quot;TagName2&quot;=&quot;Value2&quot;}
+
+LightMode标签，见下图
+PassFlags标签,只支持OnlyDirectional值（2018.1）
+RequireOptions标签，只支持SoftVegetation值（2018.1）</code></pre></li>
+</ul>
+<p><img src="/.io//LightMode.png" alt></p>
+<ul>
 <li><p>颜色通道写入遮罩。写入 ColorMask 0 可关闭对所有颜色通道的渲染。默认模式是写入所有通道 (RGBA)。使用多渲染目标 (MRT) 渲染时，可通过在末尾添加索引（0 到 7）来为每个渲染目标设置不同的颜色遮罩。例如，ColorMask RGB 3 将使渲染目标 #3 仅写入到 RGB 通道。</p>
 <pre><code>ColorMask RGB | A | 0 | R、G、B、A 的任意组合</code></pre></li>
 </ul>
+<ul>
+<li><p>模板（待续）模板缓冲区可用作像素遮罩，以便保存或丢弃像素。通常每像素8位整数。可以写入、递增或递减。后续绘制可以根据该值进行测试。</p>
+<pre><code>//语法
+//要比较的参考值 0~255
+Ref referenceValue
+//比较参考值和缓冲区内容 0~255 默认255
+ReadMask readMask
+//写入缓冲区 0~255 默认:255
+WriteMask writeMask
+//参考值与缓冲区内容比较的函数 默认:always
+Comp comparisonFunction
+//如果模板测试（和深度测试）通过，如何处理缓冲区内容 默认:keep
+Pass stencilOperation
+//如果模板测试（和深度测试）失败，如何处理缓冲区内容 默认:keep
+Fail stencilOperation
+//如果模板测试通过但是深度测试失败，如何处理缓冲区内容 默认:keep
+ZFail stencilOperation</code></pre></li>
+</ul>
+<p>Comp、Pass、Fail和ZFail将应用于正面几何体。可以定义CompFront、PassFront、FailFront或ZFailFront（正面几何体）以及CompBack、PassBack、FailBack或ZFailBack（背面几何体）来显示的指定双面模板状态。</p>
+<p>比较函数如下图：</p>
+<p><img src="/.io//MaskComp.png" alt></p>
+<p>在延迟渲染路径中渲染对象的模板功能在某种程度上受到限制。因为在基础通道和光照通道期间，模板缓冲区用于其他目的。在这两个阶段中，着色中定义的模板状态将被忽略，而仅在最终通道期间考虑。因此，不可能基于模板测试来屏蔽这些对象，但是他们仍然可以修改缓冲区内容，以供稍后再帧中渲染的对象使用。在延迟路径之后在前向渲染路径中渲染的对象（例如透明对象或没有表面着色的对象）将再次正常设置其模板状态</p>
+<p>延迟渲染路径使用模板缓冲区的三个最高位，加上最多四个最高位（具体取决于场景中使用的光遮罩层数）。可以使用模板读写掩码在“干净”的位范围内操作，也可以使用Camera.clearStencilAfterLightingPass强制摄像机在光照通道后清理模板缓冲区。</p>
+<hr>
 <h3 id="UsePass"><a href="#UsePass" class="headerlink" title="UsePass"></a>UsePass</h3><p><strong>语法</strong></p>
 <pre><code>UsePass &quot;Shader/Name&quot;</code></pre><p>插入来自给定着色器的具有给定名称的所有通道。UsePass 必须引用大写名称。</p>
+<hr>
 <h3 id="GrabPass"><a href="#GrabPass" class="headerlink" title="GrabPass"></a>GrabPass</h3><p>GrabPass 是一种特殊通道类型，它把即将绘制对象时的屏幕内容抓取到纹理中。在后续通道中即可使用此纹理，从而执行基于图像的高级效果。</p>
 <p><strong>语法</strong></p>
 <p>GrabPass包含在子着色内部。有两种形式；</p>
@@ -172,6 +225,7 @@ AlphaToMask On | Off</code></pre></li>
 <li>GrabPass{“TextureName”}可将当前屏幕内容抓取到纹理中，但仅为使用给定纹理名称的第一个对象在每一帧执行一次该操作。在后续通道中可通过给定纹理名称访问该纹理。场景中有多个对象在使用 GrabPass 时，这种方法更高效。</li>
 </ol>
 <p>GrabPass还可以使用Name和Tags命令。</p>
+<hr>
 <h3 id="子着色标签"><a href="#子着色标签" class="headerlink" title="子着色标签"></a>子着色标签</h3><p><strong>语法</strong></p>
 <pre><code>Tags { &quot;TagName1&quot; = &quot;Value1&quot; &quot;TagName2&quot; = &quot;Value2&quot; }</code></pre><p>在 SubShader 中，标签用于确定子着色器的渲染顺序和其他参数。请注意，以下由 Unity 识别的标签必须位于 SubShader 部分中，不能在 Pass 中！</p>
 <p><strong>渲染顺序 - Queue标签</strong></p>
@@ -208,7 +262,23 @@ AlphaToMask On | Off</code></pre></li>
 <p>如果着色器用于精灵，请将 CanUseSpriteAtlas 标签设置为“False”，这样在精灵打包到图集内时，该标签将不起作用，（请参阅精灵打包器 (Sprite Packer)）。</p>
 <p><strong>PreviewType 标签</strong></p>
 <p>PreviewType 指示材质检视面板预览应如何显示材质。默认情况下，材质显示为球体，但也可以将 PreviewType 设置为“Plane”（将显示为 2D）或“Skybox”（将显示为天空盒）。</p>
-  
+<hr>
+<h3 id="Fallback"><a href="#Fallback" class="headerlink" title="Fallback"></a>Fallback</h3><p><strong>语法</strong></p>
+<p>Fallback “name”/Off</p>
+<p>如果没有任何子着色能够在硬件上运行，则尝试使用另一个着色中的子着色</p>
+<hr>
+<h3 id="CustomEditor"><a href="#CustomEditor" class="headerlink" title="CustomEditor"></a>CustomEditor</h3><p>可为着色定义一个CustomEditor。Unity将查找具有此名称并能扩展ShaderGui的类。如果使用此着色的所有材质都将使用此ShaderGUI。</p>
+<p><strong>语法</strong></p>
+<pre><code>CustomEditor &quot;name&quot;</code></pre><hr>
+<h3 id="其他命令"><a href="#其他命令" class="headerlink" title="其他命令"></a>其他命令</h3><p>Category 一种逻辑分组，其中包含该分组中所有命令。不影响着色执行速度。</p>
+<pre><code>Shader &quot;example&quot;{
+    Category{
+        Fog {Mode Off}
+        blend One One
+        SubShader{}
+        SubShader{}
+    }
+}</code></pre>  
 	</div>
 		<footer class="article-footer clearfix">
 
@@ -220,7 +290,7 @@ AlphaToMask On | Off</code></pre></li>
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/Unity-学习笔记/">Unity,学习笔记</a>
+  <a class="article-category-link" href="/categories/Unity/">Unity</a>
 </div>
 
 
@@ -253,7 +323,7 @@ AlphaToMask On | Off</code></pre></li>
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#语法"><span class="toc-number">1.</span> <span class="toc-text">语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Properties"><span class="toc-number">2.</span> <span class="toc-text">Properties</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SubShader"><span class="toc-number">3.</span> <span class="toc-text">SubShader</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pass"><span class="toc-number">4.</span> <span class="toc-text">Pass</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UsePass"><span class="toc-number">5.</span> <span class="toc-text">UsePass</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GrabPass"><span class="toc-number">6.</span> <span class="toc-text">GrabPass</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#子着色标签"><span class="toc-number">7.</span> <span class="toc-text">子着色标签</span></a></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#语法"><span class="toc-number">1.</span> <span class="toc-text">语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Properties"><span class="toc-number">2.</span> <span class="toc-text">Properties</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SubShader"><span class="toc-number">3.</span> <span class="toc-text">SubShader</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pass"><span class="toc-number">4.</span> <span class="toc-text">Pass</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UsePass"><span class="toc-number">5.</span> <span class="toc-text">UsePass</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GrabPass"><span class="toc-number">6.</span> <span class="toc-text">GrabPass</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#子着色标签"><span class="toc-number">7.</span> <span class="toc-text">子着色标签</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Fallback"><span class="toc-number">8.</span> <span class="toc-text">Fallback</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CustomEditor"><span class="toc-number">9.</span> <span class="toc-text">CustomEditor</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其他命令"><span class="toc-number">10.</span> <span class="toc-text">其他命令</span></a></li></ol>
   </div>
 
 <div id="asidepart">
@@ -265,7 +335,9 @@ AlphaToMask On | Off</code></pre></li>
 	<p class="asidetitle">分类</p>
 		<ul>
 		
-			<li><a href="/categories/Unity-学习笔记/" title="Unity,学习笔记">Unity,学习笔记<sup>1</sup></a></li>
+			<li><a href="/categories/Unity/" title="Unity">Unity<sup>1</sup></a></li>
+		
+			<li><a href="/categories/Unity-学习笔记/" title="Unity,学习笔记">Unity,学习笔记<sup>0</sup></a></li>
 		
 			<li><a href="/categories/设计模式/" title="设计模式">设计模式<sup>2</sup></a></li>
 		
